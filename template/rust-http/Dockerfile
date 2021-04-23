@@ -22,6 +22,11 @@ ENV USER=app
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
+# Copy main binary
+COPY --from=builder /home/rust/main/target/x86_64-unknown-linux-musl/release/main /home/app/main
+
+WORKDIR /home/app
+
 # Set up watchdog for HTTP mode
 ENV fprocess="./main"
 ENV mode="http"
